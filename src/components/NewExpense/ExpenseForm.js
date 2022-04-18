@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
 const ExpenseForm = () => {
-  //   const [userInput, setUserInput] = useState({
-  //     enteredTitle: "",
-  //     enteredAmout: "",
-  //     enteredDate: "",
-  //   });
-  //here need to declare as seperate states
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
@@ -21,7 +15,6 @@ const ExpenseForm = () => {
     //   return { ...prevState, enteredTitle: event.target.value };
     // });
   };
-
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
   };
@@ -30,10 +23,6 @@ const ExpenseForm = () => {
     setEnteredDate(event.target.value);
   };
 
-  // disadvantge: when click on submit button, the page reload, bc the browser actually automatically sends a request
-  //whenever a form is submitted to the server whichever is hosting the page(here the development server, and this is not what we want). we
-  //want to handle the data with js, we can prevent the default behavior
-  // const submitHandler = () => {};
   const submitHandler = (event) => {
     event.preventDefault(); // add prevent the default behavior
 
@@ -45,14 +34,28 @@ const ExpenseForm = () => {
     };
 
     console.log(expendseData);
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
   };
+  // Two way binding: for input, we don't just listen to changes, but we can also pass a new value back to input
+  // so that we can reset or change the input programmatically: add value attribue , which is a default attribute to the input element
+  //This will set the internal value property , whichever input element has, and can set it to a new value
+  // now it's two way biding bc we don't jsut listen to changes in the input to update our state, but we also feed the state back to the input
+  // so that we change the state, we also change the input,
+  // advange: can set  setEnteredTitle(''); back to an empty string so we can override what the user entered
+  //after the form was submitted and therefore cleared the input
 
   return (
     <form onSubmit={submitHandler}>
       <div className="  new-expense_controls">
         <div className="new-expense_control ">
           <label> Title </label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
 
         <div className="new-expense_control ">
@@ -61,6 +64,7 @@ const ExpenseForm = () => {
             type="number"
             min="0.01"
             step="0.01"
+            value={enteredAmount}
             onChange={amountChangeHandler}
           />
         </div>
@@ -71,6 +75,7 @@ const ExpenseForm = () => {
             type="date"
             min="2019-01-01"
             max="2022-12-31"
+            value={enteredDate}
             onChange={dateChangeHandler}
           />
         </div>
@@ -84,12 +89,3 @@ const ExpenseForm = () => {
 };
 
 export default ExpenseForm;
-//onInput for key strock
-//onChange for key strock for same events of all input type
-//  <input type="text" onChange={ titleChangeHandler} />  here passed pointer
-//vanila javascript( js without react )
-
-//we could add an listener for button when submit form
-//   <button type="submit" onClick =""> Add expense </button> , but this would not be the best way of listening
-// bc there is a default behaviour that built into browser that built into forms on webpages
-//if a button is pressed instead of a form , the overal form element will emit an event to which we can listen, and that the submit event for form
