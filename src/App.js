@@ -1,4 +1,5 @@
 import React from "react";
+import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 //import ExpenseItem from "./component/ExpenseItem";
 /*start with uppercase(built by developer), 注意，comment不可以放进function内
@@ -34,7 +35,7 @@ const App = () => {
   //上面是老的react code：import React from "react";
   return (
     <div>
-      <h2>Expense Item List:</h2>
+      <NewExpense />
       <Expenses items={expenses} />
     </div>
   );
