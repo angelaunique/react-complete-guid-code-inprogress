@@ -1,57 +1,54 @@
 import React, { useState } from "react";
 
 const ExpenseForm = () => {
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmout: "",
-    enteredDate: "",
-  });
+  //   const [userInput, setUserInput] = useState({
+  //     enteredTitle: "",
+  //     enteredAmout: "",
+  //     enteredDate: "",
+  //   });
+  //here need to declare as seperate states
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = (event) => {
-    // This way sometime could fail bc i'm depending on the previous state snapshot to copy the existing value
-    //and just override one value with a new one, when use a counter at the same time, need to use another alternative way
+    setEnteredTitle(event.target.value);
     // setUserInput({
-    //   ...userInput, //by using spread operator we ensure other part of the states are not throw away but it's part of new state
+    //   ...userInput,
     //   enteredTitle: event.target.value,
     // });
-
-    //will automatically excucated by react will receive the previous state snapshot
-    // and return updated state
-
-    // in many cases, both ways would work, but react  schedules updates, if you schedule a lot of updates at the
-    //same time, you could depending and outdated or incorrect state snapshot
-
-    // if use below apporach, react will guarentee that the snapshot it gives you here
-    // in this innner function will always be the latest snapshot keeping all scheduled states in mind
-    // Thus this is a safter way. So if states update depends on the previous state, use this function form
-
-    setUserInput((prevState) => {
-      return { ...prevState, enteredTitle: event.target.value };
-    });
+    // setUserInput((prevState) => {
+    //   return { ...prevState, enteredTitle: event.target.value };
+    // });
   };
 
   const amountChangeHandler = (event) => {
-    // setUserInput({
-    //   ...userInput,
-    //   enteredAmout: event.target.value,
-    // });
-    setUserInput((prevState) => {
-      return { ...prevState, enteredAmout: event.target.value };
-    });
+    setEnteredAmount(event.target.value);
   };
 
   const dateChangeHandler = (event) => {
-    // setUserInput({
-    //   ...userInput,
-    //   enteredDate: event.target.value,
-    // });
-    setUserInput((prevState) => {
-      return { ...prevState, enteredDate: event.target.value };
-    });
+    setEnteredDate(event.target.value);
+  };
+
+  // disadvantge: when click on submit button, the page reload, bc the browser actually automatically sends a request
+  //whenever a form is submitted to the server whichever is hosting the page(here the development server, and this is not what we want). we
+  //want to handle the data with js, we can prevent the default behavior
+  // const submitHandler = () => {};
+  const submitHandler = (event) => {
+    event.preventDefault(); // add prevent the default behavior
+
+    // below enteredTitle,enteredAmout,enteredDate point to above decalred state variables
+    const expendseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate), // construct new date with Date constructor by passing enteredDate, which will pass the entered date string and convert it into a Date object
+    };
+
+    console.log(expendseData);
   };
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="  new-expense_controls">
         <div className="new-expense_control ">
           <label> Title </label>
@@ -91,3 +88,8 @@ export default ExpenseForm;
 //onChange for key strock for same events of all input type
 //  <input type="text" onChange={ titleChangeHandler} />  here passed pointer
 //vanila javascript( js without react )
+
+//we could add an listener for button when submit form
+//   <button type="submit" onClick =""> Add expense </button> , but this would not be the best way of listening
+// bc there is a default behaviour that built into browser that built into forms on webpages
+//if a button is pressed instead of a form , the overal form element will emit an event to which we can listen, and that the submit event for form
