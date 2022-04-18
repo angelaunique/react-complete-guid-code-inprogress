@@ -8,23 +8,45 @@ const ExpenseForm = () => {
   });
 
   const titleChangeHandler = (event) => {
-    setUserInput({
-      ...userInput, //by using spread operator we ensure other part of the states are not throw away but it's part of new state
-      enteredTitle: event.target.value,
+    // This way sometime could fail bc i'm depending on the previous state snapshot to copy the existing value
+    //and just override one value with a new one, when use a counter at the same time, need to use another alternative way
+    // setUserInput({
+    //   ...userInput, //by using spread operator we ensure other part of the states are not throw away but it's part of new state
+    //   enteredTitle: event.target.value,
+    // });
+
+    //will automatically excucated by react will receive the previous state snapshot
+    // and return updated state
+
+    // in many cases, both ways would work, but react  schedules updates, if you schedule a lot of updates at the
+    //same time, you could depending and outdated or incorrect state snapshot
+
+    // if use below apporach, react will guarentee that the snapshot it gives you here
+    // in this innner function will always be the latest snapshot keeping all scheduled states in mind
+    // Thus this is a safter way. So if states update depends on the previous state, use this function form
+
+    setUserInput((prevState) => {
+      return { ...prevState, enteredTitle: event.target.value };
     });
   };
 
   const amountChangeHandler = (event) => {
-    setUserInput({
-      ...userInput,
-      enteredAmout: event.target.value,
+    // setUserInput({
+    //   ...userInput,
+    //   enteredAmout: event.target.value,
+    // });
+    setUserInput((prevState) => {
+      return { ...prevState, enteredAmout: event.target.value };
     });
   };
 
   const dateChangeHandler = (event) => {
-    setUserInput({
-      ...userInput,
-      enteredDate: event.target.value,
+    // setUserInput({
+    //   ...userInput,
+    //   enteredDate: event.target.value,
+    // });
+    setUserInput((prevState) => {
+      return { ...prevState, enteredDate: event.target.value };
     });
   };
 
