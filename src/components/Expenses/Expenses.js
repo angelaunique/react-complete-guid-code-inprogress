@@ -12,9 +12,13 @@ const Expenses = (props) => {
   const [filteredYear, setFilteredYear] = useState("2020");
   const filterChangeHandler = (selectedYear) => {
     setFilteredYear(selectedYear);
-    //console.log("Expenses.js");
-    //console.log(selectedYear);
   };
+
+  //filter returned a new array! original array is not touched
+  const filteredExpenses = props.items.filter((expense) => {
+    // date is a string, need to convert date obj to string
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
 
   // expense is control component which control ExpensesFilter component
   //dynamic expression, transform expense obj  js elements in {[]}
@@ -23,7 +27,12 @@ const Expenses = (props) => {
   return (
     <div>
       <Card className="expenses">
-        {props.items.map((expense) => (
+        <ExpensesFilter
+          selected={filteredYear}
+          onChangeFilter={filterChangeHandler}
+        />
+
+        {filteredExpenses.map((expense) => (
           <ExpenseItem
             key={expense.id}
             title={expense.title}
@@ -31,11 +40,6 @@ const Expenses = (props) => {
             date={expense.date}
           />
         ))}
-
-        <ExpensesFilter
-          selected={filteredYear}
-          onChangeFilter={filterChangeHandler}
-        />
       </Card>
     </div>
   );
@@ -46,3 +50,5 @@ export default Expenses;
 
 //whenever add a new item, all other items are updated, could lead to bugs; bc all items inside of arr are
 //same to the array, solution: add key to component to help react to ideatify individual items
+// should always add a key when mapping out lists of items
+//5-66 rewatch the flash part
