@@ -13,21 +13,32 @@ const NewExpense = (props) => {
       id: Math.random().toString(), // add a new key, id set to math random(randomly generate)
     };
     props.onAddExpense(expenseData);
+    setIsEditing(false);
   };
   // setIsEditing(true); is set to true when buttion is clicked
   const startEditingHandler = () => {
     setIsEditing(true);
   };
   // Show buttion when is not adding
+  const stopEditingHandler = () => {
+    setIsEditing(false);
+  };
+
   return (
     <div className="new-expense">
       {!isEditing && (
         <button onClick={startEditingHandler}> Add New Expense </button>
       )}
-      <isEditing ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+      {isEditing && (
+        <ExpenseForm
+          onSaveExpenseData={saveExpenseDataHandler}
+          onCancel={stopEditingHandler}
+        />
+      )}
     </div>
   );
 };
 export default NewExpense;
 
-// add new expense button, show buttion when is not adding, line 24, and show form when isEditing line 27
+//Add new props (onCancel) inside of  {<isEditing ExpenseForm onSaveExpenseData={saveExpenseDataHandler}  on />}
+// pass to expenseForm component
