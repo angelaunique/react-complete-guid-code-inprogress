@@ -26,16 +26,14 @@ const App = () => {
       date: new Date(2021, 5, 12),
     },
   ];
-  // return React.createElement(
-  //   "div",
-  //   {},
-  //   React.createElement("h2", {}, "Let's get started!"),
-  //   React.createElement(Expenses, { items: expenses })
-  // );
-  //上面是老的react code：import React from "react";
+  //props can only be passed from parent to child
+  const addExpenseHandler = (expense) => {
+    console.log("In App.js"); //to confirm that data arrived
+    console.log(expenses);
+  };
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
   );

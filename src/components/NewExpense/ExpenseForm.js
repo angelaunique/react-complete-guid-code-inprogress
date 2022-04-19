@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredTitle: event.target.value,
-    // });
-    // setUserInput((prevState) => {
-    //   return { ...prevState, enteredTitle: event.target.value };
-    // });
   };
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
@@ -33,7 +26,9 @@ const ExpenseForm = () => {
       date: new Date(enteredDate), // construct new date with Date constructor by passing enteredDate, which will pass the entered date string and convert it into a Date object
     };
 
-    console.log(expendseData);
+    // console.log(expendseData);
+    props.onSaveExpenseData(expendseData); // this function was passed in from NewExpense.js :   <ExpenseForm onSaveExpenseDate={saveExpenseDataHandler} />
+
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
