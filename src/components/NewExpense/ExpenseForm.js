@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+//get props from NewExpense.js, bc we're setting up a prop now
 const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
@@ -27,6 +28,7 @@ const ExpenseForm = (props) => {
     };
 
     // console.log(expendseData);
+    // now excute onSaveExpenseData(),
     props.onSaveExpenseData(expendseData); // this function was passed in from NewExpense.js :   <ExpenseForm onSaveExpenseDate={saveExpenseDataHandler} />
 
     setEnteredTitle("");
