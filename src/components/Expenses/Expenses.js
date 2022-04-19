@@ -16,14 +16,21 @@ const Expenses = (props) => {
 
   //filter returned a new array! original array is not touched
   const filteredExpenses = props.items.filter((expense) => {
-    // date is a string, need to convert date obj to string
     return expense.date.getFullYear().toString() === filteredYear;
   });
 
-  // expense is control component which control ExpensesFilter component
-  //dynamic expression, transform expense obj  js elements in {[]}
-  // use map to extract title, amount,date from props.items array, transform array to an array full of JSX item
-  // now mean we can change the array and the changes will be rendered
+  let expenseContent = <p> No expenses found. </p>;
+  if (filteredExpenses.length > 0) {
+    expenseContent = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+
   return (
     <div>
       <Card className="expenses">
@@ -31,15 +38,7 @@ const Expenses = (props) => {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-
-        {filteredExpenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+        {expenseContent}
       </Card>
     </div>
   );
@@ -52,3 +51,43 @@ export default Expenses;
 //same to the array, solution: add key to component to help react to ideatify individual items
 // should always add a key when mapping out lists of items
 //5-66 rewatch the flash part
+
+// filter items according selected year by create filteredExpenses function and change props.item to filteredExpenses
+
+//conditonal content: rendering different item under different conditions
+
+// { filteredExpenses.length === 0 && <p> No expenses found. </p>; }
+// above js will return the part after the and operator as the overall check result if the first condition is met
+// which allow to write shoter expressions
+
+/*
+method1 and method2 are equivalent to {expenseContent} in line 40
+method1 
+Below conditional expression is changed to method2 expression
+ {filteredExpenses.length === 0 ? (
+          <p> No expenses found. </p>
+        ) : (
+          filteredExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))
+        )}
+*/
+
+/*
+{filteredExpenses.length === 0 && <p> No expenses found. </p>}
+        {filteredExpenses.length > 0 &&
+          filteredExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))}
+
+*/
