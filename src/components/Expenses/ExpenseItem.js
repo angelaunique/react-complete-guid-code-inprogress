@@ -11,13 +11,15 @@ const ExpenseItem = (props) => {
   //dumb not necessarliy worse, smart not neccessary better, bc most component focus on output sth, on having jsx code
   // only a couple component manage states(spreadout through pros)
   return (
-    <Card className="expense-item">
-      <ExpenseDate date={props.date} />
-      <div className="expense-item_description">
-        <h2>{props.title}</h2>
-        <div className="expense-item__price">${props.amount}</div>
-      </div>
-    </Card>
+    <li>
+      <Card className="expense-item">
+        <ExpenseDate date={props.date} />
+        <div className="expense-item_description">
+          <h2>{props.title}</h2>
+          <div className="expense-item__price">${props.amount}</div>
+        </div>
+      </Card>
+    </li>
   );
 };
 export default ExpenseItem;
