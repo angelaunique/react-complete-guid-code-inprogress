@@ -44,3 +44,7 @@ const App = () => {
 };
 
 export default App;
+
+// Use prevstate to add item to dynamic list and output it dynamics
+
+//whenever add a new item, all other items are updated, could lead to bugs

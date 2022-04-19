@@ -19,11 +19,13 @@ const Expenses = (props) => {
   // expense is control component which control ExpensesFilter component
   //dynamic expression, transform expense obj  js elements in {[]}
   // use map to extract title, amount,date from props.items array, transform array to an array full of JSX item
+  // now mean we can change the array and the changes will be rendered
   return (
     <div>
       <Card className="expenses">
         {props.items.map((expense) => (
           <ExpenseItem
+            key={expense.id}
             title={expense.title}
             amount={expense.amount}
             date={expense.date}
@@ -41,3 +43,6 @@ const Expenses = (props) => {
 
 export default Expenses;
 // expense is used to extract tile:    {props.items.map(expense => <ExpenseItem title = {expense.title}/>)}
+
+//whenever add a new item, all other items are updated, could lead to bugs; bc all items inside of arr are
+//same to the array, solution: add key to component to help react to ideatify individual items
