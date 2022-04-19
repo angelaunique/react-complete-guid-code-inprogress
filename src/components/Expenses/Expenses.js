@@ -15,6 +15,8 @@ const Expenses = (props) => {
     //console.log("Expenses.js");
     //console.log(selectedYear);
   };
+
+  // expense is control component which control ExpensesFilter component
   return (
     <div>
       <Card className="expenses">
